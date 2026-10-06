@@ -1,0 +1,13 @@
+# The maintainer owns every high-risk path (pipeline §6); code-owner review is required on main.
+/.github/             @SimsJM
+/CODEOWNERS           @SimsJM
+/AGENTS.md            @SimsJM
+/migrations/          @SimsJM
+/Dockerfile           @SimsJM
+/compose*.yml         @SimsJM
+/docker-compose*.yml  @SimsJM
+/pyproject.toml       @SimsJM
+/requirements*.txt    @SimsJM
+/package.json         @SimsJM
+/package-lock.json    @SimsJM
+/.importlinter        @SimsJM
