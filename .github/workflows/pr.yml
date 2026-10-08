@@ -1,0 +1,126 @@
+# Required checks for every pull request (agent pipeline §6).
+# Runs on GitHub-hosted runners only. Self-hosted runners never run pull_request workflows.
+#
+# PLACEHOLDER jobs pass until the project's tooling exists. Replace each one when the code arrives;
+# the job name is the required-check name, so keep it.
+name: pr
+
+on:
+  pull_request:
+  merge_group:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pr-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "PLACEHOLDER - no code to lint yet."
+
+  types:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "PLACEHOLDER - no code to type-check yet."
+
+  unit:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "PLACEHOLDER - no unit tests yet."
+
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "PLACEHOLDER - no end-to-end tests yet."
+
+  import-linter:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "PLACEHOLDER - layer contracts (.importlinter) not written yet."
+
+  event-log-coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "PLACEHOLDER - no write paths yet."
+
+  test-integrity:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "PLACEHOLDER - will flag deleted or weakened assertions in QA's tests."
+
+  # Fails if any commit authored by the QA app changes a file outside tests/.
+  # Limitation: git author names can be set freely, so this catches mistakes rather than a
+  # deliberate disguise. Reviewer and the maintainer remain the backstop.
+  qa-scope:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: QA commits touch tests/ only
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          bad=""
+          for c in $(git log --format=%H --author='^whereabouts-qa\[bot\]' "$BASE..$HEAD"); do
+            outside=$(git diff-tree --no-commit-id --name-only -r "$c" | grep -v '^tests/' || true)
+            [ -n "$outside" ] && bad="$bad"$'\n'"$(git log -1 --format='%h %s' "$c"):"$'\n'"$outside"
+          done
+          if [ -n "$bad" ]; then
+            echo "::error::QA changed files outside tests/:$bad"
+            exit 1
+          fi
+          echo "QA commits stay inside tests/."
+
+  # Labels high-risk PRs needs-maintainer (pipeline §6). Auto-merge is off for now, so this
+  # only labels; later it will also block auto-merge.
+  risk-classify:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Classify
+        id: classify
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+          BRANCH: ${{ github.head_ref }}
+          MAX_LINES: "200"
+          # Keep in step with .github/CODEOWNERS and the pipeline's project settings.
+          HIGH_RISK: '^(\.github/|CODEOWNERS$|AGENTS\.md$|migrations/|Dockerfile|(docker-)?compose.*\.ya?ml$|pyproject\.toml$|requirements.*\.txt$|package(-lock)?\.json$|\.importlinter$)'
+        run: |
+          files=$(git diff --name-only "$BASE...$HEAD")
+          risky=$(printf '%s\n' "$files" | grep -E "$HIGH_RISK" || true)
+          lines=$(git diff --numstat "$BASE...$HEAD" | awk '{a+=$1; d+=$2} END {print a+d+0}')
+          reasons=""
+          [ -n "$risky" ] && reasons="$reasons high-risk paths;"
+          [ "$lines" -gt "$MAX_LINES" ] && reasons="$reasons $lines changed lines (over $MAX_LINES);"
+          case "$BRANCH" in fix/*) ;; *) reasons="$reasons not a fix/ branch;" ;; esac
+          {
+            echo "### Risk classification"
+            echo "- Changed lines: $lines"
+            echo "- High-risk paths: ${risky:-none}"
+            echo "- Result: ${reasons:-low-risk}"
+          } >> "$GITHUB_STEP_SUMMARY"
+          echo "reasons=$reasons" >> "$GITHUB_OUTPUT"
+      - name: Label needs-maintainer
+        if: steps.classify.outputs.reasons != ''
+        continue-on-error: true   # fork PRs get a read-only token
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          gh label create needs-maintainer --repo "$GITHUB_REPOSITORY" --color B60205 \
+            --description "Maintainer must review and merge (pipeline §6)" 2>/dev/null || true
+          gh pr edit "$PR" --repo "$GITHUB_REPOSITORY" --add-label needs-maintainer
