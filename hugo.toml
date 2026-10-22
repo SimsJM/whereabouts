@@ -1,0 +1,4 @@
+baseURL = "https://trywhereabouts.app/"
+languageCode = "en-us"
+title = "Whereabouts"
+disableKinds = ["taxonomy", "term", "RSS", "sitemap", "robotsTXT", "404"]
