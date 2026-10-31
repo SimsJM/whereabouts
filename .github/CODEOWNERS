@@ -2,6 +2,7 @@
 /.github/             @SimsJM
 /CODEOWNERS           @SimsJM
 /AGENTS.md            @SimsJM
+/.factory/            @SimsJM
 /migrations/          @SimsJM
 /Dockerfile           @SimsJM
 /compose*.yml         @SimsJM
