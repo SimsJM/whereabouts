@@ -1,0 +1,26 @@
+# Factory pack for the Whereabouts app: merged over factory-core's factory.yaml.
+# Architect only for now. The Developer and QA need real tests first, as QA's checks run commands.test.
+version: 1
+core: v0.2.0
+company:
+  name: Whereabouts
+project:
+  name: Whereabouts App
+  slug: whereabouts-app
+  repo: https://github.com/SimsJM/whereabouts.git
+  base: main
+commands:                          # keep in step with AGENTS.md
+  test: echo "No code or tests yet"   # replace before hiring the Developer or QA
+models:
+  review: ollama-cloud/glm-5.3     # Architect
+roles:
+  developer: { enabled: false }
+  architect: { enabled: true, budget_usd: 10 }
+  qa:        { enabled: false }
+gates:
+  merge: human
+secrets:
+  inference: Ollama                # the factory's own Ollama Cloud key
+  github_write: whereabouts-app-github   # fine-grained token for this repo only
+environments:
+  preview: none
