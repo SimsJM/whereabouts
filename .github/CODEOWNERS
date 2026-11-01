@@ -3,6 +3,7 @@
 /CODEOWNERS           @SimsJM
 /AGENTS.md            @SimsJM
 /.factory/            @SimsJM
+/docs/agents/         @SimsJM
 /migrations/          @SimsJM
 /Dockerfile           @SimsJM
 /compose*.yml         @SimsJM
