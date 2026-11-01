@@ -1,0 +1,79 @@
+/* Whereabouts design tokens v1.0 — generated from tokens.json. Do not edit by hand. */
+@font-face { font-family: 'Jost'; font-weight: 300; font-display: swap; src: url('/assets/fonts/jost-latin-300-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Jost'; font-weight: 400; font-display: swap; src: url('/assets/fonts/jost-latin-400-normal.woff2') format('woff2'); }
+@font-face { font-family: 'Jost'; font-weight: 500; font-display: swap; src: url('/assets/fonts/jost-latin-500-normal.woff2') format('woff2'); }
+
+:root {
+  --bg: #EFEBE4;
+  --panel-a: #F8F5EF;
+  --panel-b: #F3EFE7;
+  --panel-c: #EDE7DC;
+  --text: #26231F;
+  --muted: #6A6258;
+  --accent: #7A5B32;
+  --on-accent: #FBF8F2;
+  --line: #D8D0C3;
+  --flag-bg: #F1E6D3;
+  --scan-bg: #11100E;
+  --scan-frame: #1C1A17;
+  --scan-card: #22201D;
+  --scan-chip-line: #3A3631;
+  --scan-accent: #C8A471;
+  --scan-text: #EEE9E0;
+  --scan-muted: #A69E92;
+  --pdf-bg: #2A2825;
+  --pdf-tip-bg: #36312A;
+  --pdf-tip-text: #E2C79C;
+  --pdf-btn-line: #4A453F;
+  --label-paper: #FFFFFF;
+  --label-ink: #1A1815;
+  --label-ink-muted: #4A453F;
+  --label-placeholder: #8A8278;
+  --label-band-muted: #C8C0B4;
+  --sheet-slot-line: #DDD6CA;
+  --pdf-slot-line: #E8E2D8;
+  --test-mark: #9A9186;
+  --scrim: rgba(20,18,16,0.45);
+  --font: 'Jost', 'Futura', 'Century Gothic', sans-serif;
+  --ls-level: 0.32em; --ls-section: 0.28em; --ls-sublabel: 0.24em; --ls-listening: 0.4em;
+  --screen-x: 24px; --touch: 44px; --btn: 52px; --radius-panel: 4px; --radius-sheet: 16px;
+  --icon-stroke: 1.25;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+  --bg: #171614;
+  --panel-a: #22201D;
+  --panel-b: #1E1C1A;
+  --panel-c: #262420;
+  --text: #EEE9E0;
+  --muted: #A69E92;
+  --accent: #C8A471;
+  --on-accent: #1A1815;
+  --line: #3A3631;
+  --flag-bg: #2E2820;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #171614;
+  --panel-a: #22201D;
+  --panel-b: #1E1C1A;
+  --panel-c: #262420;
+  --text: #EEE9E0;
+  --muted: #A69E92;
+  --accent: #C8A471;
+  --on-accent: #1A1815;
+  --line: #3A3631;
+  --flag-bg: #2E2820;
+  color-scheme: dark;
+}
+
+body { margin: 0; font-family: var(--font); background: var(--bg); color: var(--text); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.level-label { font-size: 11px; font-weight: 500; letter-spacing: var(--ls-level); text-transform: uppercase; color: var(--accent); }
+.section-label { font-size: 11px; font-weight: 500; letter-spacing: var(--ls-section); text-transform: uppercase; color: var(--accent); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+@keyframes pulse { 0% { transform: scale(1); opacity: .6 } 100% { transform: scale(1.8); opacity: 0 } }
+@keyframes sweep { 0% { top: 10% } 50% { top: 88% } 100% { top: 10% } }
+@media (prefers-reduced-motion: reduce) { .pulse, .pulse2, .sweep { animation: none; } }

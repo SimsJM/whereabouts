@@ -1,0 +1,118 @@
+# Whereabouts seed fixtures v1.0 (31 Oct 2026)
+# Mirrors the clickable prototype's sample household. Shared by e2e regression and per-PR previews (SEED_FIXTURES=demo).
+# IDs are fixture keys, not database IDs. Codes are real and must be preserved.
+# code_counters after load: B -> 63 (B-0062 is the highest), P -> 10. NOTE: the prototype's nextCode() only looks at the max B code; real allocation uses code_counters.
+
+household: {key: home-household, name: "Home household"}
+users:
+  - {key: jamie, display_name: Jamie, role: admin}
+  - {key: partner, display_name: Partner, role: member}
+agents:
+  - {key: claude, display_name: Claude, note: "agent actor for MCP-attributed events (v1.1); seeded so the Changes tab shows a non-user actor"}
+
+locations:
+  - {key: h1, kind: home, name: "Main house", parent: null}
+  - {key: h2, kind: home, name: "Cottage", parent: null}
+  - {key: garage, kind: room, name: "Garage", parent: h1}
+  - {key: loft, kind: room, name: "Loft", parent: h1}
+  - {key: kitchen, kind: room, name: "Kitchen", parent: h1}
+  - {key: bedroom, kind: room, name: "Bedroom", parent: h1}
+  - {key: g-s1, kind: place, name: "Shelf 1", parent: garage, code: P-0001}
+  - {key: g-s2, kind: place, name: "Shelf 2", parent: garage, code: P-0002}
+  - {key: g-du, kind: place, name: "Drawer unit", parent: garage, code: P-0003}
+  - {key: b42, kind: box, name: "Toolbox", parent: g-s2, code: B-0042}
+  - {key: b17, kind: box, name: "Drawer 1", parent: g-du, code: B-0017}
+  - {key: b51, kind: box, name: "Paint crate", parent: g-s1, code: B-0051}
+  - {key: b55, kind: box, name: "Fishing crate", parent: g-s1, code: B-0055}
+  - {key: b56, kind: box, name: "Tackle box", parent: b55, code: B-0056}
+  - {key: l-e, kind: place, name: "Eaves", parent: loft, code: P-0004}
+  - {key: b03, kind: box, name: "Christmas box", parent: l-e, code: B-0003}
+  - {key: b08, kind: box, name: "Winter clothes", parent: l-e, code: B-0008}
+  - {key: b11, kind: box, name: "Suitcase", parent: l-e, code: B-0011}
+  - {key: k-us, kind: place, name: "Under sink", parent: kitchen, code: P-0005}
+  - {key: k-dr, kind: place, name: "Dresser", parent: kitchen, code: P-0006}
+  - {key: b20, kind: box, name: "Junk drawer", parent: k-dr, code: B-0020}
+  - {key: bd-w, kind: place, name: "Wardrobe", parent: bedroom, code: P-0007}
+  - {key: b31, kind: box, name: "Shoe box", parent: bd-w, code: B-0031}
+  - {key: c-kit, kind: room, name: "Kitchen", parent: h2}
+  - {key: c-shed, kind: room, name: "Shed", parent: h2}
+  - {key: c-pan, kind: place, name: "Pantry", parent: c-kit, code: P-0008}
+  - {key: b61, kind: box, name: "Picnic box", parent: c-pan, code: B-0061}
+  - {key: c-bench, kind: place, name: "Workbench", parent: c-shed, code: P-0009}
+  - {key: b62, kind: box, name: "Garden tools", parent: c-bench, code: B-0062}
+
+items:
+  - {key: i1, name: "Allen key set", category: "Hand tools", quantity: 1, location: b42}
+  - {key: i2, name: "Cordless drill", category: "Power tools", quantity: 1, location: b42}
+  - {key: i3, name: "Drill bit set", category: "Accessories", quantity: 1, location: b42}
+  - {key: i4, name: "Tape measure", category: "Measuring", quantity: 2, location: b42}
+  - {key: i5, name: "Spirit level", category: "Measuring", quantity: 1, location: b42}
+  - {key: i6, name: "Picture hooks", category: "Fixings", quantity: 24, location: b42}
+  - {key: i7, name: "Wall plugs (box)", category: "Fixings", quantity: 2, location: b17}
+  - {key: i8, name: "Assorted screws", category: "Fixings", quantity: 1, location: b17}
+  - {key: i9, name: "Cable ties", category: "Electrical", quantity: 50, location: b17}
+  - {key: i10, name: "White emulsion", category: "Decorating", quantity: 2, location: b51}
+  - {key: i11, name: "Paint brushes", category: "Decorating", quantity: 4, location: b51}
+  - {key: i12, name: "Masking tape", category: "Decorating", quantity: 3, location: b51}
+  - {key: i13, name: "Extension reel", category: "Electrical", quantity: 1, location: g-s1}
+  - {key: i14, name: "Fairy lights", category: "Seasonal", quantity: 3, location: b03}
+  - {key: i15, name: "Baubles (box)", category: "Seasonal", quantity: 2, location: b03}
+  - {key: i16, name: "Tree stand", category: "Seasonal", quantity: 1, location: b03}
+  - {key: i17, name: "Ski jacket", category: "Clothes", quantity: 2, location: b08}
+  - {key: i18, name: "Thermal gloves", category: "Clothes", quantity: 3, location: b08}
+  - {key: i19, name: "Wool hats", category: "Clothes", quantity: 4, location: b08}
+  - {key: i20, name: "Beach towels", category: "Linen", quantity: 4, location: b11}
+  - {key: i21, name: "AA batteries", category: "Electrical", quantity: 12, location: b20}
+  - {key: i22, name: "Spare keys", category: "Household", quantity: 3, location: b20}
+  - {key: i23, name: "Sticky tape", category: "Stationery", quantity: 2, location: b20}
+  - {key: i24, name: "Bin bags (roll)", category: "Household", quantity: 3, location: k-us}
+  - {key: i25, name: "Dishwasher tablets", category: "Household", quantity: 1, location: k-us}
+  - {key: i26, name: "Suit carrier", category: "Clothes", quantity: 1, location: bd-w}
+  - {key: i27, name: "Walking boots", category: "Clothes", quantity: 1, location: b31}
+  - {key: i28, name: "Step ladder", category: "Tools", quantity: 1, location: garage}
+  - {key: i29, name: "Road bike", category: "Sport", quantity: 1, location: garage}
+  - {key: i30, name: "Hoover", category: "Cleaning", quantity: 1, location: kitchen}
+  - {key: i31, name: "Fishing rod", category: "Sport", quantity: 2, location: b55}
+  - {key: i32, name: "Landing net", category: "Sport", quantity: 1, location: b55}
+  - {key: i33, name: "Hooks and weights", category: "Fishing", quantity: 1, location: b56}
+  - {key: i34, name: "Spare line", category: "Fishing", quantity: 2, location: b56}
+  - {key: i35, name: "Picnic blanket", category: "Outdoor", quantity: 1, location: b61}
+  - {key: i36, name: "Enamel mugs", category: "Kitchen", quantity: 4, location: b61}
+  - {key: i37, name: "Torch", category: "Electrical", quantity: 1, location: c-kit}
+  - {key: i38, name: "Secateurs", category: "Garden", quantity: 1, location: b62}
+  - {key: i39, name: "Hose connectors", category: "Garden", quantity: 3, location: b62}
+  - {key: i40, name: "Lawn mower", category: "Garden", quantity: 1, location: c-shed}
+  - {key: i57, name: "Passports", category: "Documents", quantity: 3, location: b31}
+  - {key: i58, name: "Torch", category: "Electrical", quantity: 1, location: k-us}
+
+loans:
+  - {item: i2, lent_to: "Sam next door", since: "last Saturday"}
+  - {item: i29, lent_to: "Ali", since: "2026-10-02"}
+
+pins:        # per user
+  jamie: [i57, i22, i58]
+item_views:  # 'Looked for', most recent first
+  jamie: [i1, i57, i14, i21]
+label_queue: [b31]
+
+events:      # newest first; relative times are offsets from fixture load time
+  - {key: e1, actor: partner, verb: item.moved, subject: i6, summary: "Moved to Toolbox", before: {location: b17}, after: {location: b42}, ago: 2h, undoable: true}
+  - {key: e5, actor: partner, verb: item.moved, subject: i22, summary: "Moved to Junk drawer", before: {location: bd-w}, after: {location: b20}, ago: 1d, undoable: true}
+  - {key: e2, actor: jamie, verb: voice.added, subject: b03, summary: "Added 3 items", ago: 1d}
+  - {key: e3, actor: jamie, verb: label.printed, subject: b51, summary: "Printed", ago: 4d}
+  - {key: e4, actor: claude, actor_type: agent, verb: item.quantity_changed, subject: i21, summary: "Quantity set to 12 via MCP", ago: 5d}
+
+# Scripted inputs used by the prototype (use as recorded fakes):
+voice_fakes:
+  - transcript: "Three extension leads, a cordless sander and a box of wall plugs"
+    parsed: [{name: "Extension lead", category: Electrical, quantity: 3}, {name: "Cordless sander", category: "Power tools", quantity: 1}, {name: "Wall plugs (box)", category: Fixings, quantity: 1, duplicate_of: i7}]
+  - transcript: "Six wine glasses, the cafetière and two baking trays"
+    parsed: [{name: "Wine glasses", category: Kitchen, quantity: 6}, {name: "Cafetière", category: Kitchen, quantity: 1}, {name: "Baking tray", category: Kitchen, quantity: 2}]
+  - transcript: "allen keys"   # voice search
+move_defaults:
+  rooms_offered: [Kitchen, "Living room", "Bedroom 1", "Bedroom 2", Bathroom, Loft, Garage]
+  rooms_preselected: [Kitchen, "Living room", "Bedroom 1", "Bedroom 2", Loft, Garage]
+  new_home_name: "New house"
+search_chips: ["allen keys", batteries, "fairy lights", B-0051]
+new_box_suggestions: ["Camping gear", Cables, "Kids clothes", "Party supplies"]
+pack_suggestions: ["Kitchen stuff", Books, Bathroom, Toys]
