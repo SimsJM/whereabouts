@@ -4,7 +4,7 @@
 - **Completes:** the "Decision: to be written" section of the `0002-frontend-stack` handover note, which this ADR replaces
 - **Settled inputs:** D-05 (FastAPI + SQLite), D-06 (PWA), D-07 (Jamie must be able to contribute), D-09/D-10 (own Whisper; LLM for parsing only), D-16/D-17 (server-side PDFs; QR encodes `/c/<code>`), D-18 (Pivi Pro look, Jost), D-24 (open models build most of it), NFR-04 (no third parties at runtime, strict CSP), NFR-07/08/09/11.
 
-> Identifier conventions below: `D-xx` / `O-xx` cite the decision log, `Sxx` the screen inventory, `FR-xx` / `NFR-xx` the requirements, and bare `§` the handover pack (architecture, test strategy). Where anything in the pack disagrees with the decision log, the log wins.
+> Identifier conventions below: `D-xx` / `O-xx` cite the decision log (`docs/agents/decision-log.md`), `Sxx` the screen inventory, `FR-xx` / `NFR-xx` the requirements, and bare `§` the handover pack (architecture, test strategy). Where anything in the pack disagrees with the decision log, the log wins.
 
 ## Context
 
