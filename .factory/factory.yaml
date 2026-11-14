@@ -1,26 +1,35 @@
-# Factory pack for the Whereabouts app: merged over factory-core's factory.yaml.
-# Architect only for now. The Developer and QA need real tests first, as QA's checks run commands.test.
-version: 1
-core: v0.2.0
-company:
-  name: Whereabouts
-project:
-  name: Whereabouts App
-  slug: whereabouts-app
-  repo: https://github.com/SimsJM/whereabouts.git
-  base: main
-commands:                          # keep in step with AGENTS.md
-  test: echo "No code or tests yet"   # replace before hiring the Developer or QA
-models:
-  review: ollama-cloud/glm-5.3     # Architect
-roles:
-  developer: { enabled: false }
-  architect: { enabled: true, budget_usd: 10 }
-  qa:        { enabled: false }
-gates:
-  merge: human
-secrets:
-  inference: Ollama                # the factory's own Ollama Cloud key
-  github_write: whereabouts-app-github   # fine-grained token for this repo only
-environments:
-  preview: none
+# The factory's pack for the Whereabouts app.
+#
+# Cerebro, the orchestrator, reads this file from `main` and from nowhere else. It reads two keys:
+#   commands:  what its machine checks run on a pull request's head, in this order: install, test, ship_check
+#   protected: paths an agent may not change without an exception the maintainer approves in the specification
+# Keep the commands in step with AGENTS.md.
+version: 2
+
+commands:
+  # A private virtual environment in the checkout, then the project's development requirements if it has any yet.
+  install: >-
+    python3 -m venv .venv &&
+    .venv/bin/python -m pip install --quiet --upgrade pip &&
+    if [ -f requirements-dev.txt ]; then .venv/bin/python -m pip install --quiet -r requirements-dev.txt;
+    elif [ -f pyproject.toml ]; then .venv/bin/python -m pip install --quiet -e ".[dev]"; fi
+  # One script, so the checks are the same for an agent, for Cerebro and for a person.
+  test: sh tools/factory-check.sh
+
+# A folder ends in /. Everything else is one exact path.
+protected:
+  - .factory/
+  - .github/
+  - AGENTS.md
+  - CODEOWNERS
+  - SECURITY.md
+  - tools/factory-check.sh
+  - docs/agents/decision-log.md
+  - migrations/
+  - Dockerfile
+  - compose.yml
+  - docker-compose.yml
+  - pyproject.toml
+  - requirements.txt
+  - requirements-dev.txt
+  - .importlinter
